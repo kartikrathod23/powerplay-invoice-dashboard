@@ -23,6 +23,6 @@ const customerSchema = new Schema<ICustomer>({
   {timestamps: true,}
 );
 
-customerSchema.index({ name: 1 });
+customerSchema.index({ name: 1 },{ unique: true });
 
 export const Customer= model<ICustomer>("Customer",customerSchema);
