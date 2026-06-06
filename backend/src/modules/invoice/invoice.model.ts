@@ -1,6 +1,6 @@
-import {Schema,model,Document,Types,} from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
-export enum InvoiceStatus{
+export enum InvoiceStatus {
   SENT = "Sent",
   UNPAID = "Unpaid",
   OVERDUE = "Overdue",
@@ -78,11 +78,6 @@ const invoiceSchema = new Schema<IInvoice>({
   }
 );
 
-invoiceSchema.index({ invoiceId: 1 });
-invoiceSchema.index({ customerId: 1 });
-invoiceSchema.index({ status: 1 });
-invoiceSchema.index({ issueDate: 1 });
-invoiceSchema.index({ dueDate: 1 });
 invoiceSchema.index({customerId: 1,status: 1,});
 invoiceSchema.index({issueDate: -1,});
 
