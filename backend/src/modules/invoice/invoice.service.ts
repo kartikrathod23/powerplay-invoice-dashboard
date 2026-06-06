@@ -8,13 +8,13 @@ interface GetInvoicesQuery{
   limit?: number;
   search?: string;
   status?: string;
+  taxRate?: number;
   customerId?: string;
   issueDateFrom?: string;
   issueDateTo?: string;
   dueDateFrom?: string;
   dueDateTo?: string;
-
-  sortBy?: "amount" | "dueDate";
+  sortBy?:| "invoiceId"| "customer"| "amount"| "total"| "dueDate";
   sortOrder?: "asc" | "desc";
 }
 
@@ -34,6 +34,7 @@ export const getInvoicesService = async (query: GetInvoicesQuery) => {
     const{
     search,
     status,
+    taxRate,
     customerId,
     issueDateFrom,
     issueDateTo,
@@ -48,6 +49,10 @@ export const getInvoicesService = async (query: GetInvoicesQuery) => {
   if(status){
     matchStage.status = status;
   }
+  if(taxRate !== undefined){
+    matchStage.taxRate = Number(taxRate);
+  }
+
   if(customerId){
     matchStage.customerId = new Types.ObjectId(customerId);
   }
@@ -120,19 +125,50 @@ export const getInvoicesService = async (query: GetInvoicesQuery) => {
     });
   }
 
-  const sortStage: Record<string, 1 | -1> = {};
+  const sortDirection = sortOrder === "asc" ? 1 : -1;
 
-  if(sortBy === "amount"){
-    sortStage.amount = sortOrder === "asc" ? 1 : -1;
-  }else if(sortBy === "dueDate"){
-    sortStage.dueDate =sortOrder === "asc" ? 1 : -1;
-  }else{
-    sortStage.createdAt = -1;
+  if(sortBy==="invoiceId"){
+    pipeline.push({
+        $sort: {
+            invoiceId: sortDirection,
+        },
+    });
   }
-
-  pipeline.push({
-    $sort: sortStage,
-  });
+  else if(sortBy === "customer"){
+    pipeline.push({
+        $sort: {
+            "customer.name": sortDirection,
+        },
+    });
+  }
+  else if(sortBy === "amount"){
+    pipeline.push({
+        $sort: {
+            amount: sortDirection,
+        },
+    });
+  }
+  else if(sortBy==="total"){
+    pipeline.push({
+        $sort: {
+            total: sortDirection,
+        },
+    });
+  }
+  else if(sortBy==="dueDate"){
+    pipeline.push({
+        $sort: {
+            dueDate: sortDirection,
+        },
+    });
+  }
+  else{
+    pipeline.push({
+        $sort: {
+            createdAt: -1,
+        },
+    });
+  }
 
   pipeline.push({
     $facet: {
@@ -237,5 +273,21 @@ export const updateInvoiceService = async (invoiceId: string,payload: {customerI
   invoice.dueDate =new Date(payload.dueDate);
 
   await invoice.save();
+  return invoice;
+};
+
+
+export const getInvoiceByIdService = async (invoiceId: string)=>{
+  const invoice = await Invoice.findOne({
+    invoiceId,
+  }).populate({
+    path: "customerId",
+    select: "name company",
+  });
+
+  if(!invoice){
+    throw new ApiError(404,"Invoice not found");
+  }
+
   return invoice;
 };

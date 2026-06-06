@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getInvoicesService,createInvoiceService,updateInvoiceService } from "./invoice.service";
+import { getInvoicesService,createInvoiceService,updateInvoiceService,getInvoiceByIdService } from "./invoice.service";
 
 export const getInvoicesController = async(req: Request,res: Response):Promise<void> =>{
   try{
@@ -50,6 +50,25 @@ export const updateInvoiceController =async (req: Request,res: Response)=>{
       res.status( error.statusCode || 500).json({
         success: false,
         message:error.message ||"Failed to update invoice",
+      });
+    }
+};
+
+
+
+export const getInvoiceByIdController =async (req: Request,res: Response): Promise<void> => {
+    try{
+      const invoice = await getInvoiceByIdService(req.params.invoiceId);
+
+      res.status(200).json({
+        success: true,
+        message:"Invoice fetched successfully",
+        data: invoice,
+      });
+    }catch (error: any){
+      res.status(error.statusCode || 500).json({
+          success: false,
+          message: error.message || "Failed to fetch invoice",
       });
     }
 };

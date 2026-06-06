@@ -39,6 +39,7 @@ export const getInvoicesSchema = z.object({
   query: z.object({
     page: z.coerce.number().min(1).optional(),
     limit: z.coerce.number().min(1).max(100).optional(),
+    taxRate: z.coerce.number().optional(),
     search: z.string().optional(),
     status: z.string().optional(),
     customerId: z.string().optional(),
@@ -46,8 +47,8 @@ export const getInvoicesSchema = z.object({
     issueDateTo: z.string().optional(),
     dueDateFrom: z.string().optional(),
     dueDateTo: z.string().optional(),
-
-    sortBy: z.enum(["amount", "dueDate"]).optional(),
+    
+    sortBy: z.enum(["invoiceId","customer","amount","total","dueDate"]).optional(),
     sortOrder: z.enum(["asc", "desc"]).optional(),
   }),
 });
