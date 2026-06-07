@@ -40,7 +40,7 @@ export const createInvoiceController =async (req: Request,res: Response) => {
 
 export const updateInvoiceController =async (req: Request,res: Response)=>{
     try{
-      const invoice =await updateInvoiceService(req.params.invoiceId,req.body);
+      const invoice =await updateInvoiceService(req.params.invoiceId as string,req.body);
       res.status(200).json({
         success: true,
         message:"Invoice updated successfully",
@@ -58,7 +58,7 @@ export const updateInvoiceController =async (req: Request,res: Response)=>{
 
 export const getInvoiceByIdController =async (req: Request,res: Response): Promise<void> => {
     try{
-      const invoice = await getInvoiceByIdService(req.params.invoiceId);
+      const invoice = await getInvoiceByIdService(req.params.invoiceId as string);
 
       res.status(200).json({
         success: true,

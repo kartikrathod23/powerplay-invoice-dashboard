@@ -63,9 +63,6 @@ const invoiceSchema = new mongoose_1.Schema({
 }, {
     timestamps: true,
 });
-invoiceSchema.index({ invoiceId: 1 });
-invoiceSchema.index({ customerId: 1 });
-invoiceSchema.index({ status: 1 });
-invoiceSchema.index({ issueDate: 1 });
-invoiceSchema.index({ dueDate: 1 });
+invoiceSchema.index({ customerId: 1, status: 1, });
+invoiceSchema.index({ issueDate: -1, });
 exports.Invoice = (0, mongoose_1.model)("Invoice", invoiceSchema);

@@ -14,5 +14,5 @@ const customerSchema = new mongoose_1.Schema({
         trim: true,
     },
 }, { timestamps: true, });
-customerSchema.index({ name: 1 });
+customerSchema.index({ name: 1 }, { unique: true });
 exports.Customer = (0, mongoose_1.model)("Customer", customerSchema);

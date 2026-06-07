@@ -41,7 +41,7 @@ export default function DashboardPage() {
       enabled:!!selectedInvoiceId,
   });
 
-  const {data,isLoading,isFetching, error} = useQuery({
+  const {data,isFetching, error} = useQuery({
     queryKey: [
       "invoices",
       page,
