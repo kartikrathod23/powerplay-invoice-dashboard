@@ -550,13 +550,56 @@ Invalid requests return:
 
 ---
 
-# Assumptions
+# Trade-offs & Assumptions
 
-* Customer names are unique.
-* Tax amount is calculated from amount and tax rate.
-* Invoice IDs are unique.
-* Analytics are generated from invoice data stored in MongoDB.
-* Seed script is used for generating sample records.
+## Authentication
+
+Authentication and authorization were intentionally not implemented because they were outside the assignment scope.
+All APIs are currently publicly accessible.
+
+## Database
+
+MongoDB indexes were added only on fields frequently used for filtering and sorting:
+- customerId
+- status
+- issueDate
+
+Additional indexes can be introduced based on production query patterns.
+
+## Analytics
+
+Analytics are calculated from invoice data using MongoDB aggregation pipelines.
+For larger datasets, these values could be precomputed and cached.
+
+## Testing
+
+The project includes API and validation tests using Jest and Supertest.
+Frontend component testing was not implemented due to time constraints and assignment priorities.
+
+## Pagination
+
+Pagination is implemented server-side to avoid loading large datasets into the browser.
+
+## Docker
+
+Docker Compose is configured for local development and evaluation.
+Production deployments would typically use managed MongoDB services and separate deployment pipelines.
+
+---
+
+# Screenshots
+
+## Dashboard
+
+![Dashboard](image-1.png)
+
+## Customer Profile
+
+![Customer Profile](image-2.png)
+
+## Analytics
+
+![Analytics](image-3.png)
 
 ---
 
