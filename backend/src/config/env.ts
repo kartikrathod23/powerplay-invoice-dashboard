@@ -1,4 +1,9 @@
 import { z } from "zod";
+import dotenv from "dotenv";
+
+dotenv.config({
+  quiet: true,
+});
 
 const envSchema = z.object({
   PORT: z.string(),

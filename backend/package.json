@@ -8,7 +8,7 @@
     "start": "node dist/server.js",
     "seed": "node dist/scripts/seed.js",
     "seed:dev": "ts-node-dev --transpile-only src/scripts/seed.ts",
-    "test": "jest --runInBand"
+    "test": "set NODE_ENV=test&& jest --runInBand"
   },
   "keywords": [],
   "author": "",
