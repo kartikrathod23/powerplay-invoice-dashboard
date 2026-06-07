@@ -4,6 +4,10 @@ Full Stack Invoice Management Dashboard built with React, TypeScript, Express, M
 
 ---
 
+Live URL: https://powerplay-invoice-dashboard.vercel.app/
+
+---
+
 # Tech Stack
 
 ## Frontend
