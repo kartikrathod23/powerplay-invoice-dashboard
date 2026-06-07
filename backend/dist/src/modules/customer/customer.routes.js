@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const customer_controller_1 = require("./customer.controller");
+const validateRequest_1 = require("../../middleware/validateRequest");
+const customer_validation_1 = require("./customer.validation");
+const router = (0, express_1.Router)();
+router.get("/", customer_controller_1.getCustomersController);
+router.get("/:customerId", (0, validateRequest_1.validateRequest)(customer_validation_1.customerParamsSchema), customer_controller_1.getCustomerProfileController);
+exports.default = router;
